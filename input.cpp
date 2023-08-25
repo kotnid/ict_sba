@@ -49,7 +49,7 @@ variant<int, dbData> getCsv(string filename, float lowerBound, float higherBound
     // read data
     while (getline(file, input)) {
         if (count(input.begin(), input.end(), ',') != headers.size() - 1) {
-            return 3; // data out of range
+            return 2; // Invalid data contained
         }
 
         stringstream inputStream(input);
