@@ -56,16 +56,21 @@ variant<int, dbData> getCsv(string filename, float lowerBound, float higherBound
         string name;
         vector<float> values;
         float value;
+        int classNum;
         char comma;
-        cout << input << "!\n";
+        cout << input << "\n";
         getline(inputStream, name, ',');
-        cout << name << " ";
 
         for (int i = 1; i < headers.size(); i++) {
             string Svalue;
             getline(inputStream, Svalue, ',');
             if(Svalue != "")value = stoi(Svalue);
             else value = 0; // handle empty data
+            
+            if(i == 1){
+                classNum = value;
+                continue;
+            }
 
             if (value < lowerBound || value > higherBound) {
                 return 3; // data out of range
@@ -73,7 +78,7 @@ variant<int, dbData> getCsv(string filename, float lowerBound, float higherBound
             values.emplace_back(value);
         }
 
-        result.emplace_back(Data{name, values});
+        result.emplace_back(Data{name,classNum,values});
     }    
     dbData output;
     output.headers = headers;
