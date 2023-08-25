@@ -101,5 +101,16 @@ unordered_map<string,float> getStats(dbData input){
     }
     stat["normal distribution"] = sqrt(sum / calculatedScores.size());
 
+    // find Q3/Q1 
+    if (calculatedScores.size()%4 != 0) {
+        stat["Q1"] = (calculatedScores[calculatedScores.size()/4] + calculatedScores[calculatedScores.size()/4-1]) / 2.0;
+        stat["Q3"] = (calculatedScores[3*calculatedScores.size()/4] + calculatedScores[3*calculatedScores.size()/4+1]) / 2.0;
+    }else{
+        stat["Q1"] = calculatedScores[calculatedScores.size()/4];
+        stat["Q3"] = calculatedScores[calculatedScores.size()/4];
+    }
+    
+
+
     return stat;
 } 
