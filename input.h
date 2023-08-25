@@ -7,4 +7,4 @@
 
 using namespace std;
 
-variant<int, dbData> getCsv(string filename, float lowerBound, float higherBound);
+variant<int, dbData> getCsv(string filename);

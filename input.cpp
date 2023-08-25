@@ -5,12 +5,12 @@
 #include <sstream>
 #include <filesystem>
 #include <iostream>
-
+#include <algorithm>
 
 using namespace std;
 namespace fs = std::filesystem;
 
-variant<int, dbData> getCsv(string filename, float lowerBound, float higherBound) {
+variant<int, dbData> getCsv(string filename) {
     /*
     parameter:
     filename - name of the csv
@@ -46,6 +46,8 @@ variant<int, dbData> getCsv(string filename, float lowerBound, float higherBound
         headers.push_back(data);
     }
 
+    dbData output;
+
     // read data
     while (getline(file, input)) {
         if (count(input.begin(), input.end(), ',') != headers.size() - 1) {
@@ -54,12 +56,18 @@ variant<int, dbData> getCsv(string filename, float lowerBound, float higherBound
 
         stringstream inputStream(input);
         string name;
-        vector<float> values;
+        vector<float> values, maxScore(headers.size()-2),weighting(headers.size()-2);
         float value;
         int classNum;
         char comma;
         cout << input << "\n";
         getline(inputStream, name, ',');
+
+        fill(maxScore.begin(), maxScore.end(), 100);
+        fill(weighting.begin(), weighting.end(), 100);
+
+        output.maxScore = maxScore;
+        output.weighting = weighting;
 
         for (int i = 1; i < headers.size(); i++) {
             string Svalue;
@@ -72,15 +80,12 @@ variant<int, dbData> getCsv(string filename, float lowerBound, float higherBound
                 continue;
             }
 
-            if (value < lowerBound || value > higherBound) {
-                return 3; // data out of range
-            }
             values.emplace_back(value);
         }
 
         result.emplace_back(Data{name,classNum,values});
     }    
-    dbData output;
+    
     output.headers = headers;
     output.result = result;
 

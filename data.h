@@ -11,5 +11,7 @@ struct Data {
 
 struct dbData{
     vector<string> headers;
+    vector<float> maxScore;
+    vector<float> weighting;
     vector<Data> result;
 };
