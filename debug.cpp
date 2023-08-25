@@ -33,6 +33,14 @@ void printdbData(dbData customData){
         for (float score : data.scores) {
             cout << score << " ";
         }
-        cout << "\n" << "\n";
+        cout << "\n\n";
     }
+}
+
+// print all stats
+void printdbStats(unordered_map<string,float>stat){
+    for (const auto& pair : stat) {
+        cout << pair.first << ": " << pair.second << "\n";
+    }
+    cout << "\n\n";
 }
