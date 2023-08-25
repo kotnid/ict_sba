@@ -94,5 +94,12 @@ unordered_map<string,float> getStats(dbData input){
     stat["max"] = *std::max_element(calculatedScores.begin(), calculatedScores.end());
     stat["min"] = *std::min_element(calculatedScores.begin(), calculatedScores.end());
 
+    // find normal distribution
+    float sum = 0.0;
+    for (float value : calculatedScores) {
+        sum += pow(value - stat["mean"], 2);
+    }
+    stat["normal distribution"] = sqrt(sum / calculatedScores.size());
+
     return stat;
 } 
