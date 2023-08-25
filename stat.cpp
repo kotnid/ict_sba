@@ -1,6 +1,8 @@
 #include "stat.h"
 #include <iostream>
 #include <algorithm> 
+#include <unordered_map>
+#include "numeric"
 
 using namespace std;
 
@@ -30,7 +32,7 @@ bool classNumCmp(Data a, Data b,bool ASC){
     }
 }
 
-dbData dbSort(int type, dbData data){
+dbData dbSort(int type, dbData input){
     /*
     parameter:
     0 - score ascending
@@ -39,9 +41,9 @@ dbData dbSort(int type, dbData data){
     3 - classNum descending
     */
 
-    vector<Data>scores = data.result;
-    vector<float>maxScore = data.maxScore;
-    vector<float>weighting = data.weighting;
+    vector<Data>scores = input.result;
+    vector<float>maxScore = input.maxScore;
+    vector<float>weighting = input.weighting;
 
     if(type == 0){
         sort(scores.begin(),scores.end(),[maxScore, weighting](Data a, Data b){
@@ -61,5 +63,36 @@ dbData dbSort(int type, dbData data){
         });
     }
 
-    return dbData{data.headers,maxScore,weighting,scores};
+    return dbData{input.headers,maxScore,weighting,scores};
 }
+
+unordered_map<string,float> getStats(dbData input){
+    unordered_map<string,float> stat;
+
+    vector<float> calculatedScores;
+    for (const Data& data : input.result) {
+        float sum = 0.0;
+        for (size_t i = 0; i < data.scores.size(); ++i) {
+            sum += data.scores[i] / input.maxScore[i] * input.weighting[i];
+        }
+        calculatedScores.push_back(sum);
+    }
+    sort(calculatedScores.begin(), calculatedScores.end());
+
+    // find median
+    if (calculatedScores.size() % 2 == 0) {
+        stat["median"] = (calculatedScores[calculatedScores.size() / 2 - 1] + calculatedScores[calculatedScores.size() / 2]) / 2.0;
+    } else {
+        stat["median"] = calculatedScores[calculatedScores.size() / 2];
+    }
+
+    // find mean
+    float sum = std::accumulate(calculatedScores.begin(), calculatedScores.end(), 0.0);
+    stat["mean"] = sum / calculatedScores.size();
+
+    // find the maximum and minimum
+    stat["max"] = *std::max_element(calculatedScores.begin(), calculatedScores.end());
+    stat["min"] = *std::min_element(calculatedScores.begin(), calculatedScores.end());
+
+    return stat;
+} 
