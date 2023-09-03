@@ -47,3 +47,19 @@ void printdbStats(unordered_map<string,float>stat){
     }
     cout << "\n\n";
 }
+
+// print data
+void printData(vector<Data> customData){
+    for (const Data& data : customData) {
+        cout << "Name: " << data.name << "\n";
+        cout << "Form: " << data.form << "\n";
+        cout << "Class: " << data.Class << "\n";
+        cout << "Class Number: " << data.classNum << "\n";
+        cout << "Subject: " << data.subject << "\n";
+        cout << "Scores: ";
+        for (float score : data.scores) {
+            cout << score << " ";
+        }
+        cout << "\n\n";
+    }
+}
