@@ -29,6 +29,7 @@ void printdbData(dbData customData){
     for (const Data& data : customData.result) {
         cout << "Name: " << data.name << "\n";
         cout << "Class Number: " << data.classNum << "\n";
+        cout << "Subject: " << data.subject << "\n";
         cout << "Scores: ";
         for (float score : data.scores) {
             cout << score << " ";
