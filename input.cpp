@@ -54,11 +54,13 @@ variant<int, dbData> getCsv(string filename) {
 
         stringstream inputStream(input);
         string name;
-        vector<float> values, maxScore(headers.size()-3),weighting(headers.size()-3);
+        vector<float> values, maxScore(headers.size()-4),weighting(headers.size()-4);
         float value;
         int classNum;
         char comma;
         string subject;
+        string Class;
+        string form;
 
         cout << input << "\n";
         getline(inputStream, name, ',');
@@ -70,8 +72,10 @@ variant<int, dbData> getCsv(string filename) {
         output.weighting = weighting;
 
         getline(inputStream, subject, ',');
+        getline(inputStream, form, ',');
+        getline(inputStream, Class, ',');
 
-        for (int i = 2; i < headers.size(); i++) {
+        for (int i = 3; i < headers.size(); i++) {
             string Svalue;
             getline(inputStream, Svalue, ',');
 
@@ -82,7 +86,7 @@ variant<int, dbData> getCsv(string filename) {
                 return 3;
             }
 
-            if(i == 2){
+            if(i == 3){
                 classNum = value;
                 continue;
             }
@@ -90,7 +94,7 @@ variant<int, dbData> getCsv(string filename) {
             values.emplace_back(value);
         } 
 
-        result.emplace_back(Data{name,classNum,subject,values});
+        result.emplace_back(Data{name,classNum,form,Class,subject,values});
     }    
     
     output.headers = headers;

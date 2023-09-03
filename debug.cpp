@@ -28,6 +28,8 @@ void printdbData(dbData customData){
     cout << "Data Entries: " << "\n";
     for (const Data& data : customData.result) {
         cout << "Name: " << data.name << "\n";
+        cout << "Form: " << data.form << "\n";
+        cout << "Class: " << data.Class << "\n";
         cout << "Class Number: " << data.classNum << "\n";
         cout << "Subject: " << data.subject << "\n";
         cout << "Scores: ";

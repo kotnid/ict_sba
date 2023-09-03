@@ -7,6 +7,9 @@ using namespace std;
 struct Data {
     string name;
     int classNum;
+    string form;
+    string Class;
+    string subject;
     vector<float> scores;
 };
 
