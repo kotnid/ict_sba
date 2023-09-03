@@ -14,14 +14,12 @@ variant<int, dbData> getCsv(string filename) {
     /*
     parameter:
     filename - name of the csv
-    lowerBound - lowest possible score
-    higherBound - highest possible score
-
+    
     error code list: 
     0 - File not exist
     1 - File is not csv
     2 - Invalid data contained 
-    3 - Data out of range
+    3 - Not integer
     */
 
     // data validation
@@ -72,16 +70,21 @@ variant<int, dbData> getCsv(string filename) {
         for (int i = 1; i < headers.size(); i++) {
             string Svalue;
             getline(inputStream, Svalue, ',');
-            if(Svalue != "")value = stoi(Svalue);
-            else value = 0; // handle empty data
-            
+
+            try{
+                if(Svalue != "")value = stoi(Svalue);
+                else value = 0; // handle empty data
+            }catch(exception e){
+                return 3;
+            }
+
             if(i == 1){
                 classNum = value;
                 continue;
             }
 
             values.emplace_back(value);
-        }
+        } 
 
         result.emplace_back(Data{name,classNum,values});
     }    
