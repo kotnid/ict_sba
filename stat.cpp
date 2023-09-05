@@ -3,6 +3,7 @@
 #include <algorithm> 
 #include <unordered_map>
 #include "numeric"
+#include "cmath"
 
 using namespace std;
 
@@ -87,8 +88,8 @@ unordered_map<string,float> getStats(dbData input){
     }
 
     // find mean
-    float sum = std::accumulate(calculatedScores.begin(), calculatedScores.end(), 0.0);
-    stat["mean"] = sum / calculatedScores.size();
+    float sum2 = std::accumulate(calculatedScores.begin(), calculatedScores.end(), 0.0);
+    stat["mean"] = sum2 / calculatedScores.size();
 
     // find the maximum and minimum
     stat["max"] = *std::max_element(calculatedScores.begin(), calculatedScores.end());
