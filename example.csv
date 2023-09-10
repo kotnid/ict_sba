@@ -1,5 +1,9 @@
-Name,Score,Score
-A,100,23
-B,50,30
-C,70,50
-D,,80
+Name,Subject,form,Class,Number,Score
+A,chi,1,a,1,1
+B,eng,2,b,2,2
+C,math,3,c,3,3
+tkt,chi,1,a,4,100
+is,eng,4,b,5,0
+bad,math,3,d,4,99
+at,chi,2,e,3,3
+coding,eng,6,a,2,50

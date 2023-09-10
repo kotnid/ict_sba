@@ -73,6 +73,8 @@ vector<Data> query (vector<Data>input, vector<string>name, vector<string>sub, ve
         if (flag) {
             output.push_back(data);
         }
+
+        // cout << flag << " " << data.name << "\n";
     }
 
     return output;

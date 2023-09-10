@@ -70,15 +70,18 @@ vector<Data> dbSort(int type, vector<Data> scores){
     return scores;
 }
 
-unordered_map<string,float> getStats(dbData input){
+unordered_map<string,float> getStats(vector<Data>input){
     unordered_map<string,float> stat;
 
+    vector<float>maxScore = {100,100};
+    vector<float>weighting = {100,100};
+
     vector<float> calculatedScores;
-    for (const Data& data : input.result) {
-        float sum = 0.0;
-        for (size_t i = 0; i < data.scores.size(); ++i) {
-            sum += data.scores[i] / input.maxScore[i] * input.weighting[i];
-        }
+    for (const Data& data : input) {
+        float sum = data.scores[0];
+        // for (size_t i = 0; i < data.scores.size(); ++i) {
+        //     sum += data.scores[i] / maxScore[i] * weighting[i];
+        // }
         calculatedScores.push_back(sum);
     }
     sort(calculatedScores.begin(), calculatedScores.end());
