@@ -62,7 +62,7 @@ variant<int, dbData> getCsv(string filename) {
         string Class;
         string form;
 
-        cout << input << "\n";
+        // cout << input << "\n";
         getline(inputStream, name, ',');
 
         fill(maxScore.begin(), maxScore.end(), 100);
