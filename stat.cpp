@@ -27,24 +27,27 @@ bool scoreCmp(Data a, Data b,const vector<float>& maxScore, const vector<float>&
 
 bool classNumCmp(Data a, Data b,bool ASC){
     if(ASC){
+        if(a.form != b.form)return a.form < b.form;
+        if(a.Class != b.Class)return a.Class < b.Class;
         return a.classNum < b.classNum;
     }else{
+        if(a.form != b.form)return a.form > b.form;
+        if(a.Class != b.Class)return a.Class > b.Class;
         return a.classNum > b.classNum;
     }
 }
 
-dbData dbSort(int type, dbData input){
+vector<Data> dbSort(int type, vector<Data> scores){
     /*
     parameter:
     0 - score ascending
     1 - score descending
-    2 - classNum ascending
-    3 - classNum descending
+    2 - form+class+Num ascending
+    3 - form+class+Num descending
     */
 
-    vector<Data>scores = input.result;
-    vector<float>maxScore = input.maxScore;
-    vector<float>weighting = input.weighting;
+    vector<float>maxScore = {100,100};
+    vector<float>weighting = {100,100};
 
     if(type == 0){
         sort(scores.begin(),scores.end(),[maxScore, weighting](Data a, Data b){
@@ -64,7 +67,7 @@ dbData dbSort(int type, dbData input){
         });
     }
 
-    return dbData{input.headers,maxScore,weighting,scores};
+    return scores;
 }
 
 unordered_map<string,float> getStats(dbData input){
